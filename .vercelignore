@@ -1,0 +1,10 @@
+assets/*.mp4
+assets/hero.jpg
+assets/silhouette.jpg
+assets/kecak.jpg
+assets/*_1080p.jpg
+*.md
+site_*.html
+brand-card.html
+extract.json
+.git
