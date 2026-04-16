@@ -448,7 +448,6 @@ var SETS={
   sandikala:{prefix:'assets/frames_penjor/',total:121,frames:[],loaded:0,canvas:document.getElementById('sandikala-canvas'),cover:true}
 };
 Object.keys(SETS).forEach(function(k){SETS[k].ctx=SETS[k].canvas.getContext('2d')});
-var allLoaded=0,totalFrames=SETS.hero.total+SETS.stack.total+SETS.sandikala.total;
 var inited=false;
 
 function pad(n){return String(n).padStart(4,'0')}
@@ -457,7 +456,7 @@ function preloadSet(s){
     var img=new Image();
     img.src=s.prefix+'frame-'+pad(i)+'.jpg';
     img.onload=img.onerror=function(){
-      s.loaded++;allLoaded++;
+      s.loaded++;
       if(s.loaded===1){drawCover(s,0)}
       // init as soon as hero is mostly loaded
       if(!inited && SETS.hero.loaded>=Math.floor(SETS.hero.total*0.4)){
