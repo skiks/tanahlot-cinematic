@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -30,12 +29,12 @@
 html{scroll-behavior:smooth}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.65;font-weight:300;-webkit-font-smoothing:antialiased}
 
-/* Noise overlay */
+/* Noise */
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity:0.04}
 
-/* Cursor glow */
+/* Cursor glow — hidden until mouse moves */
 .cursor-glow{position:fixed;top:50%;left:50%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(231,125,60,.08) 0%,transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);will-change:transform;filter:blur(8px);opacity:0;transition:opacity .6s}
 .cursor-glow.on{opacity:1}
 @media(max-width:768px){.cursor-glow{display:none}}
@@ -62,18 +61,18 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(13,10,8,.85)}
 .btn-primary{background:var(--accent);color:#fff;padding:16px 36px;border-radius:40px;font-family:'Outfit',sans-serif;font-weight:600;font-size:15px;letter-spacing:.02em;text-decoration:none;transition:all .2s cubic-bezier(.16,1,.3,1);border:none;cursor:pointer;will-change:transform;display:inline-block}
 .btn-primary:hover{box-shadow:0 10px 32px rgba(196,30,30,.35)}
 
-/* ═══ HERO · TEXT MASK with scroll-driven canvas ═══ */
-.hero-section{position:relative;min-height:300vh;background:var(--bg)}
-.hero-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
-.hero-canvas{position:absolute;top:0;left:0;display:block;z-index:1}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,10,8,.55) 0%,rgba(13,10,8,.4) 50%,rgba(13,10,8,.7) 100%);z-index:2}
-.hero-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3}
-.hero-text-outline{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,15vw,220px);font-weight:500;letter-spacing:.01em;line-height:.92;text-align:center;text-transform:uppercase;color:transparent;-webkit-text-stroke:2px rgba(245,237,224,.55);text-shadow:0 2px 30px rgba(0,0,0,.8)}
-.hero-reveal{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;clip-path:inset(100% 0 0 0)}
-.hero-text-filled{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,15vw,220px);font-weight:500;letter-spacing:.01em;line-height:.92;text-align:center;text-transform:uppercase;-webkit-background-clip:text;background-clip:text;color:transparent;background:linear-gradient(135deg,var(--sunset) 0%,var(--gold) 45%,var(--sunset) 100%)}
-.hero-subblock{position:absolute;bottom:14%;left:50%;transform:translateX(-50%);text-align:center;z-index:5;opacity:0;display:flex;flex-direction:column;align-items:center;gap:14px}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2vw,22px);color:var(--text);background:rgba(12,10,8,.7);padding:5px 16px;display:inline-block;backdrop-filter:blur(5px);line-height:1.4;max-width:40ch}
-.hero-scroll-hint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--body);letter-spacing:.3em;text-transform:uppercase;background:rgba(12,10,8,.7);padding:5px 14px;display:inline-block;backdrop-filter:blur(5px)}
+/* ═══ MASK SECTIONS (hero + sandikala share pattern) ═══ */
+.mask-section{position:relative;min-height:300vh;background:var(--bg)}
+.mask-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
+.mask-canvas{position:absolute;top:0;left:0;display:block;z-index:1}
+.mask-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,10,8,.55) 0%,rgba(13,10,8,.4) 50%,rgba(13,10,8,.7) 100%);z-index:2}
+.mask-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3}
+.mask-text-outline{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,15vw,220px);font-weight:500;letter-spacing:.01em;line-height:.92;text-align:center;text-transform:uppercase;color:transparent;-webkit-text-stroke:2px rgba(245,237,224,.55);text-shadow:0 2px 30px rgba(0,0,0,.8)}
+.mask-reveal{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;clip-path:inset(100% 0 0 0)}
+.mask-text-filled{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,15vw,220px);font-weight:500;letter-spacing:.01em;line-height:.92;text-align:center;text-transform:uppercase;-webkit-background-clip:text;background-clip:text;color:transparent;background:linear-gradient(135deg,var(--sunset) 0%,var(--gold) 45%,var(--sunset) 100%)}
+.mask-subblock{position:absolute;bottom:14%;left:50%;transform:translateX(-50%);text-align:center;z-index:5;opacity:0;display:flex;flex-direction:column;align-items:center;gap:14px}
+.mask-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2vw,22px);color:var(--text);background:rgba(12,10,8,.7);padding:5px 16px;display:inline-block;backdrop-filter:blur(5px);line-height:1.4;max-width:42ch}
+.mask-hint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--body);letter-spacing:.3em;text-transform:uppercase;background:rgba(12,10,8,.7);padding:5px 14px;display:inline-block;backdrop-filter:blur(5px)}
 
 /* ═══ KINETIC MARQUEE ═══ */
 .marquee-band{background:var(--accent);padding:18px 0;overflow:hidden;border-top:1px solid rgba(245,237,224,.1);border-bottom:1px solid rgba(0,0,0,.2)}
@@ -96,20 +95,20 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(13,10,8,.85)}
 .stat-suffix{font-family:'JetBrains Mono',monospace;font-size:clamp(20px,3vw,36px);font-weight:600;color:var(--sunset)}
 .stat-label{font-size:13px;font-weight:500;color:var(--body);margin-top:12px;letter-spacing:.02em;line-height:1.4}
 
-/* ═══ STICKY STACK ═══ */
+/* ═══ STICKY STACK — silhouette video scrolls with steps ═══ */
 .stack-section{max-width:1150px;margin:0 auto;padding:60px 24px 130px}
 .section-label{text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--sunset);margin-bottom:18px;padding-top:40px}
 .section-title{text-align:center;font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.5vw,56px);font-weight:400;letter-spacing:-.01em;line-height:1.1;margin-bottom:60px;color:var(--text)}
 .section-title em{color:var(--sunset);font-style:italic}
 .stack-container{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
-.stack-visual{position:sticky;top:120px;height:fit-content}
-.stack-visual-frame{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;aspect-ratio:4/3}
-.mockup-state{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:32px;opacity:0;transition:opacity .5s cubic-bezier(.16,1,.3,1)}
-.mockup-state.active{opacity:1}
-.mockup-state .glyph{width:240px;height:240px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(231,125,60,.12),rgba(196,30,30,.08));border:1px solid var(--border);border-radius:50%;margin-bottom:22px}
-.mockup-state .glyph svg{width:100px;height:100px;color:var(--sunset)}
-.mockup-state .label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--text);text-align:center;max-width:32ch;line-height:1.5}
-.mockup-state .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-top:10px}
+.stack-visual{position:sticky;top:110px;height:fit-content}
+.stack-visual-frame{position:relative;background:#000;border:1px solid var(--border);border-radius:16px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 30px 70px rgba(0,0,0,.4)}
+.stack-canvas{position:absolute;top:0;left:0;display:block;z-index:1}
+.stack-grad{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(13,10,8,.6) 85%,rgba(13,10,8,.95) 100%);z-index:2;pointer-events:none}
+.stack-caption{position:absolute;left:0;right:0;bottom:24px;height:60px;z-index:3;pointer-events:none}
+.stack-caption .time{position:absolute;left:50%;bottom:0;transform:translateX(-50%) translateY(14px);white-space:nowrap;opacity:0;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--text);background:rgba(12,10,8,.75);padding:6px 14px;backdrop-filter:blur(5px);border:1px solid rgba(245,237,224,.08);border-radius:4px;transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
+.stack-caption .time.active{opacity:1;transform:translateX(-50%) translateY(0)}
+.stack-caption .time strong{color:var(--sunset);font-weight:600;margin-right:10px}
 .feature-card{padding:42px 32px;border-radius:16px;background:var(--card);border:1px solid var(--border);opacity:.35;transform:translateY(10px);transition:all .4s cubic-bezier(.16,1,.3,1)}
 .feature-card.active{opacity:1;transform:translateY(0);border-color:rgba(231,125,60,.4);box-shadow:0 0 0 1px rgba(231,125,60,.2),0 16px 40px rgba(0,0,0,.25)}
 .feature-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--sunset);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
@@ -117,17 +116,8 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(13,10,8,.85)}
 .feature-card p{font-size:15px;color:var(--body);line-height:1.75}
 .stack-features{display:flex;flex-direction:column;gap:40px;padding:30px 0}
 
-/* ═══ SCROLL CANVAS SECTION ═══ */
-.scroll-section{position:relative;height:400vh;background:var(--bg)}
-.scroll-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
-.scroll-sticky canvas{position:absolute;top:0;left:0;display:block}
-.scroll-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,transparent 70%,rgba(13,10,8,.65) 100%);z-index:2;pointer-events:none}
-.scroll-copy{position:absolute;bottom:12%;left:50%;transform:translateX(-50%);z-index:3;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
-.scroll-copy .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.3em;text-transform:uppercase;background:rgba(12,10,8,.7);padding:5px 14px;display:inline-block;backdrop-filter:blur(5px)}
-.scroll-copy .line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.4vw,26px);color:var(--text);background:rgba(12,10,8,.7);padding:5px 16px;display:inline-block;backdrop-filter:blur(5px);max-width:42ch;line-height:1.45}
-
-/* ═══ SPOTLIGHT + TILT TICKET CARDS ═══ */
-.tickets-section{padding:130px 24px;max-width:1100px;margin:0 auto}
+/* ═══ SPOTLIGHT + TILT · TICKET CARDS ═══ */
+.tickets-section{padding:60px 24px 130px;max-width:1100px;margin:0 auto}
 .spot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--border);border-radius:20px;overflow:hidden}
 .spot-card{background:var(--card);padding:48px 34px;position:relative;overflow:hidden;cursor:default;transform-style:preserve-3d;transition:transform .18s ease-out,background .3s;will-change:transform}
 .spot-card .spotlight{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s}
@@ -139,12 +129,12 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(13,10,8,.85)}
 .spot-price{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--sunset);font-weight:600;letter-spacing:.02em}
 
 /* Heritage */
-.heritage-section{padding:130px 24px;max-width:780px;margin:0 auto;text-align:center}
+.heritage-section{padding:60px 24px 130px;max-width:780px;margin:0 auto;text-align:center}
 .heritage-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--body);line-height:1.85;margin-top:28px;font-weight:400}
 .heritage-text strong{color:var(--text);font-style:normal;font-weight:500}
 
-/* Testimonial / pull-quote */
-.quote-section{padding:100px 24px 40px;text-align:center}
+/* Quote */
+.quote-section{padding:20px 24px 40px;text-align:center}
 .quote-box{max-width:780px;margin:0 auto;padding:60px 48px;background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:24px;position:relative}
 .quote-box::before{content:'\201C';position:absolute;top:18px;left:32px;font-family:'Cormorant Garamond',serif;font-size:90px;color:rgba(196,30,30,.18);line-height:1}
 .quote-box blockquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;font-weight:400;line-height:1.55;margin-bottom:24px;color:var(--text)}
@@ -186,7 +176,7 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   .quote-box blockquote{font-size:19px}
   .cta-box{padding:52px 28px}
   .spot-grid{grid-template-columns:1fr}
-  .heritage-section{padding:100px 24px}
+  .heritage-section{padding:60px 24px 100px}
 }
 
 .fade-up{opacity:0;transform:translateY(30px)}
@@ -214,20 +204,20 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   </div>
 </nav>
 
-<!-- ═══ HERO · TEXT MASK with scroll-driven canvas ═══ -->
-<section class="hero-section">
-  <div class="hero-sticky">
-    <canvas id="hero-canvas" class="hero-canvas"></canvas>
-    <div class="hero-overlay"></div>
-    <div class="hero-text">
-      <div class="hero-text-outline">Tanah<br>Lot</div>
+<!-- ═══ HERO · "TANAH LOT" text-mask with canang-sari frames ═══ -->
+<section class="mask-section" id="hero">
+  <div class="mask-sticky">
+    <canvas id="hero-canvas" class="mask-canvas"></canvas>
+    <div class="mask-overlay"></div>
+    <div class="mask-text">
+      <div class="mask-text-outline">Tanah<br>Lot</div>
     </div>
-    <div class="hero-reveal">
-      <div class="hero-text-filled">Tanah<br>Lot</div>
+    <div class="mask-reveal" id="heroReveal">
+      <div class="mask-text-filled">Tanah<br>Lot</div>
     </div>
-    <div class="hero-subblock" id="heroSubblock">
-      <div class="hero-sub">Where Bali's spirit meets the sea.</div>
-      <div class="hero-scroll-hint">Scroll · gulir ke bawah</div>
+    <div class="mask-subblock" id="heroSubblock">
+      <div class="mask-sub">Where Bali's spirit meets the sea.</div>
+      <div class="mask-hint">Scroll · gulir ke bawah</div>
     </div>
   </div>
 </section>
@@ -270,49 +260,19 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   </div>
 </section>
 
-<!-- ═══ STICKY STACK — how a visit unfolds ═══ -->
+<!-- ═══ STICKY STACK — silhouette video scrubs with scroll, steps update captions ═══ -->
 <section class="stack-section" id="visit">
   <div class="section-label fade-up">How a visit unfolds</div>
   <h2 class="section-title fade-up">Arrive in daylight. <em>Leave by firelight.</em></h2>
   <div class="stack-container">
     <div class="stack-visual">
       <div class="stack-visual-frame">
-        <div class="mockup-state active" data-state="1">
-          <div class="glyph">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4"/>
-              <path d="M12 2v2"/><path d="M12 20v2"/>
-              <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
-              <path d="M2 12h2"/><path d="M20 12h2"/>
-              <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
-            </svg>
-          </div>
-          <div class="label">Arrive while the sun is still high, walk the avenue of offerings toward the sea.</div>
-          <div class="meta">15:00 &nbsp;·&nbsp; Golden hour begins</div>
-        </div>
-        <div class="mockup-state" data-state="2">
-          <div class="glyph">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 21c2-3 5-4 9-4s7 1 9 4"/>
-              <path d="M12 3v6"/>
-              <path d="M9 9c0-1.7 1.3-3 3-3s3 1.3 3 3v4c0 2-1 4-3 4s-3-2-3-4V9z"/>
-              <path d="M7 19c-1 0-3-1-3-3"/>
-              <path d="M17 19c1 0 3-1 3-3"/>
-            </svg>
-          </div>
-          <div class="label">Witness the temple on its rock as the tide rises and waves wrap its base.</div>
-          <div class="meta">17:00 &nbsp;·&nbsp; High tide · the temple floats</div>
-        </div>
-        <div class="mockup-state" data-state="3">
-          <div class="glyph">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8.5 14.5c-2.3-1-4-3.2-4-6C4.5 5 7.5 2 11 2c1.5 0 3 .6 4 1.6"/>
-              <path d="M15 10c3 0 5 2 5 5s-2 5-5 5-5-2-5-5"/>
-              <path d="M9 18c0 2 1 4 3 4s3-1 3-3"/>
-            </svg>
-          </div>
-          <div class="label">Fifty voices, a single chant — <em>cak cak cak</em> — the Kecak fire dance at sundown.</div>
-          <div class="meta">18:00 &nbsp;·&nbsp; Kecak &amp; fire dance</div>
+        <canvas id="stack-canvas" class="stack-canvas"></canvas>
+        <div class="stack-grad"></div>
+        <div class="stack-caption">
+          <span class="time active" data-caption="1"><strong>15:00</strong>Golden hour begins</span>
+          <span class="time" data-caption="2"><strong>17:00</strong>High tide · the temple floats</span>
+          <span class="time" data-caption="3"><strong>18:00</strong>Kecak &amp; fire dance</span>
         </div>
       </div>
     </div>
@@ -332,18 +292,6 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
         <h3>Stay for Kecak at 18:00</h3>
         <p>Fifty men chant <em>cak cak cak</em> in a circle of firelight as the sun sinks behind the horizon. Performed daily. No music, no instruments — only voices, rhythm, and the sea below.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SCROLL ANIMATION — cinematic reveal ═══ -->
-<section class="scroll-section">
-  <div class="scroll-sticky">
-    <canvas id="scroll-canvas"></canvas>
-    <div class="scroll-overlay"></div>
-    <div class="scroll-copy">
-      <div class="eyebrow">Canang sari · the daily offering</div>
-      <div class="line">Every morning and every dusk, flowers, rice, and incense are laid at the temple — a small gesture of thanks for the day that passed.</div>
     </div>
   </div>
 </section>
@@ -413,10 +361,28 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   </div>
 </section>
 
+<!-- ═══ SANDIKALA · text-mask reveal with penjor frames — leads to CTA ═══ -->
+<section class="mask-section" id="sandikala">
+  <div class="mask-sticky">
+    <canvas id="sandikala-canvas" class="mask-canvas"></canvas>
+    <div class="mask-overlay"></div>
+    <div class="mask-text">
+      <div class="mask-text-outline">Sandikala</div>
+    </div>
+    <div class="mask-reveal" id="sandikalaReveal">
+      <div class="mask-text-filled">Sandikala</div>
+    </div>
+    <div class="mask-subblock" id="sandikalaSubblock">
+      <div class="mask-sub">The sacred hour between day and night &mdash; when the world holds its breath. Every evening at 18:00.</div>
+      <div class="mask-hint">Kecak · fire dance · sundown</div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ CTA + Contact ═══ -->
 <section class="cta-section" id="cta">
   <div class="cta-box fade-up">
-    <h2>Every sunset, <em>18:00.</em></h2>
+    <h2>Come for <em>sandikala.</em></h2>
     <p>Open daily 07:00 &ndash; 19:00 &middot; Kecak &amp; fire dance at sundown.<br>Come for a day, stay for the ritual.</p>
     <div class="magnetic-cta" id="ctaMagnetic">
       <a href="tel:+62361880361" class="btn-primary">Call the temple office &rarr;</a>
@@ -461,7 +427,10 @@ gsap.registerPlugin(ScrollTrigger);
   var glow=document.getElementById('glow');
   var mx=innerWidth/2,my=innerHeight/2,gx=mx,gy=my;
   var activated=false;
-  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;if(!activated){activated=true;glow.classList.add('on')}});
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX;my=e.clientY;
+    if(!activated){activated=true;glow.classList.add('on')}
+  });
   function move(){
     gx+=(mx-gx)*0.1;gy+=(my-gy)*0.1;
     glow.style.transform='translate('+(gx-250)+'px,'+(gy-250)+'px)';
@@ -470,94 +439,111 @@ gsap.registerPlugin(ScrollTrigger);
   move();
 })();
 
-// ═══ FRAME SEQUENCE — shared 121 frames, two canvases ═══
-var TOTAL=121;
-var heroCanvas=document.getElementById('hero-canvas');
-var heroCtx=heroCanvas.getContext('2d');
-var scrollCanvas=document.getElementById('scroll-canvas');
-var scrollCtx=scrollCanvas.getContext('2d');
-var frames=[],loaded=0,inited=false;
+// ═══ THREE FRAME SEQUENCES — hero (canang), stack (silhouette), sandikala (penjor) ═══
+var SETS={
+  hero:{prefix:'assets/frames/',total:121,frames:[],loaded:0,canvas:document.getElementById('hero-canvas'),cover:true},
+  stack:{prefix:'assets/frames_silhouette/',total:121,frames:[],loaded:0,canvas:document.getElementById('stack-canvas'),cover:true},
+  sandikala:{prefix:'assets/frames_penjor/',total:121,frames:[],loaded:0,canvas:document.getElementById('sandikala-canvas'),cover:true}
+};
+Object.keys(SETS).forEach(function(k){SETS[k].ctx=SETS[k].canvas.getContext('2d')});
+var allLoaded=0,totalFrames=SETS.hero.total+SETS.stack.total+SETS.sandikala.total;
+var inited=false;
 
 function pad(n){return String(n).padStart(4,'0')}
-for(var i=1;i<=TOTAL;i++){
-  var img=new Image();
-  img.src='assets/frames/frame-'+pad(i)+'.jpg';
-  img.onload=img.onerror=function(){
-    loaded++;
-    if(loaded===1){drawCover(heroCanvas,heroCtx,0);drawCover(scrollCanvas,scrollCtx,0)}
-    if(loaded>=Math.floor(TOTAL*0.4)&&!inited){
-      document.getElementById('loader').classList.add('done');
-      initAll();
-    }
-  };
-  frames.push(img);
+function preloadSet(s){
+  for(var i=1;i<=s.total;i++){
+    var img=new Image();
+    img.src=s.prefix+'frame-'+pad(i)+'.jpg';
+    img.onload=img.onerror=function(){
+      s.loaded++;allLoaded++;
+      if(s.loaded===1){drawCover(s,0)}
+      // init as soon as hero is mostly loaded
+      if(!inited && SETS.hero.loaded>=Math.floor(SETS.hero.total*0.4)){
+        document.getElementById('loader').classList.add('done');
+        initAll();
+      }
+    };
+    s.frames.push(img);
+  }
 }
-setTimeout(function(){
-  if(!inited){document.getElementById('loader').classList.add('done');initAll()}
-},6000);
-
-function sizeCanvas(cvs){
-  var w=window.innerWidth,h=window.innerHeight;
+function sizeCanvas(cvs,w,h){
   cvs.width=w;cvs.height=h;
   cvs.style.width=w+'px';cvs.style.height=h+'px';
 }
-function drawCover(cvs,ctx,idx){
-  var img=frames[Math.min(idx,frames.length-1)];
+function drawCover(s,idx){
+  var img=s.frames[Math.min(idx,s.frames.length-1)];
   if(!img||!img.complete||!img.naturalWidth)return;
+  var cvs=s.canvas,ctx=s.ctx;
   var cw=cvs.width,ch=cvs.height;
+  if(!cw||!ch)return;
   var r=Math.max(cw/img.naturalWidth,ch/img.naturalHeight);
   var w=img.naturalWidth*r,h=img.naturalHeight*r;
   ctx.clearRect(0,0,cw,ch);
   ctx.drawImage(img,(cw-w)/2,(ch-h)/2,w,h);
 }
-function resizeAll(){
-  sizeCanvas(heroCanvas);sizeCanvas(scrollCanvas);
-  drawCover(heroCanvas,heroCtx,currentHero);
-  drawCover(scrollCanvas,scrollCtx,currentScroll);
+
+// Viewport-sized canvases (hero + sandikala)
+function sizeViewportCanvases(){
+  var w=window.innerWidth,h=window.innerHeight;
+  sizeCanvas(SETS.hero.canvas,w,h);
+  sizeCanvas(SETS.sandikala.canvas,w,h);
+  drawCover(SETS.hero,currentFrame.hero);
+  drawCover(SETS.sandikala,currentFrame.sandikala);
 }
-var currentHero=0,currentScroll=0;
-window.addEventListener('resize',resizeAll);
-sizeCanvas(heroCanvas);sizeCanvas(scrollCanvas);
+// Container-sized canvas (stack)
+function sizeStackCanvas(){
+  var frame=document.querySelector('.stack-visual-frame');
+  if(!frame)return;
+  var r=frame.getBoundingClientRect();
+  sizeCanvas(SETS.stack.canvas,Math.round(r.width),Math.round(r.height));
+  drawCover(SETS.stack,currentFrame.stack);
+}
+var currentFrame={hero:0,stack:0,sandikala:0};
+window.addEventListener('resize',function(){sizeViewportCanvases();sizeStackCanvas()});
+
+sizeViewportCanvases();
+sizeStackCanvas();
+
+// Preload
+preloadSet(SETS.hero);
+preloadSet(SETS.stack);
+preloadSet(SETS.sandikala);
+
+// Safety init (if loader stuck)
+setTimeout(function(){if(!inited){document.getElementById('loader').classList.add('done');initAll()}},7000);
 
 function initAll(){
   if(inited)return;inited=true;
 
-  // Hero canvas — scroll-scrubbed frame sequence
-  gsap.to({frame:0},{
-    frame:TOTAL-1,snap:'frame',ease:'none',
-    scrollTrigger:{trigger:'.hero-section',start:'top top',end:'bottom bottom',scrub:0.3},
-    onUpdate:function(){currentHero=Math.round(this.targets()[0].frame);drawCover(heroCanvas,heroCtx,currentHero)}
+  // Hero canvas — scroll-scrubbed
+  gsap.to({f:0},{f:SETS.hero.total-1,snap:'f',ease:'none',
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom bottom',scrub:0.3},
+    onUpdate:function(){currentFrame.hero=Math.round(this.targets()[0].f);drawCover(SETS.hero,currentFrame.hero)}
   });
 
-  // Scroll canvas — repeat the reveal in a later section
-  gsap.to({frame:0},{
-    frame:TOTAL-1,snap:'frame',ease:'none',
-    scrollTrigger:{trigger:'.scroll-section',start:'top top',end:'bottom bottom',scrub:0.5},
-    onUpdate:function(){currentScroll=Math.round(this.targets()[0].frame);drawCover(scrollCanvas,scrollCtx,currentScroll)}
+  // Hero text-mask reveal
+  gsap.to('#heroReveal',{clipPath:'inset(0% 0 0 0)',ease:'none',
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'60% bottom',scrub:0.3}
+  });
+  gsap.to('#heroSubblock',{opacity:1,ease:'none',
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'15% top',scrub:true}
+  });
+  gsap.to('#heroSubblock',{opacity:0,y:-40,ease:'none',
+    scrollTrigger:{trigger:'#hero',start:'55% top',end:'70% top',scrub:true}
   });
 
-  // Text-mask reveal — sunset fills "TANAH LOT"
-  gsap.to('.hero-reveal',{
-    clipPath:'inset(0% 0 0 0)',ease:'none',
-    scrollTrigger:{trigger:'.hero-section',start:'top top',end:'60% bottom',scrub:0.3}
+  // Stack canvas — scroll-scrubbed through silhouette frames
+  gsap.to({f:0},{f:SETS.stack.total-1,snap:'f',ease:'none',
+    scrollTrigger:{trigger:'#visit',start:'top 70%',end:'bottom 30%',scrub:0.5},
+    onUpdate:function(){currentFrame.stack=Math.round(this.targets()[0].f);drawCover(SETS.stack,currentFrame.stack)}
   });
 
-  // Subblock fade-in then fade-out
-  gsap.to('#heroSubblock',{
-    opacity:1,ease:'none',
-    scrollTrigger:{trigger:'.hero-section',start:'top top',end:'15% top',scrub:true}
-  });
-  gsap.to('#heroSubblock',{
-    opacity:0,y:-40,ease:'none',
-    scrollTrigger:{trigger:'.hero-section',start:'55% top',end:'70% top',scrub:true}
-  });
-
-  // Sticky stack — activate cards & mockup states
+  // Sticky stack — cards + captions active by scroll
   var cards=document.querySelectorAll('.feature-card');
-  var states=document.querySelectorAll('.mockup-state');
+  var captions=document.querySelectorAll('.stack-caption .time');
   function activate(num){
     cards.forEach(function(c){c.classList.toggle('active',c.dataset.feature===num)});
-    states.forEach(function(s){s.classList.toggle('active',s.dataset.state===num)});
+    captions.forEach(function(s){s.classList.toggle('active',s.dataset.caption===num)});
   }
   cards.forEach(function(card){
     ScrollTrigger.create({
@@ -565,6 +551,23 @@ function initAll(){
       onEnter:function(){activate(card.dataset.feature)},
       onEnterBack:function(){activate(card.dataset.feature)}
     });
+  });
+
+  // Sandikala canvas — scroll-scrubbed through penjor frames
+  gsap.to({f:0},{f:SETS.sandikala.total-1,snap:'f',ease:'none',
+    scrollTrigger:{trigger:'#sandikala',start:'top top',end:'bottom bottom',scrub:0.3},
+    onUpdate:function(){currentFrame.sandikala=Math.round(this.targets()[0].f);drawCover(SETS.sandikala,currentFrame.sandikala)}
+  });
+
+  // Sandikala text-mask reveal + subblock
+  gsap.to('#sandikalaReveal',{clipPath:'inset(0% 0 0 0)',ease:'none',
+    scrollTrigger:{trigger:'#sandikala',start:'top top',end:'60% bottom',scrub:0.3}
+  });
+  gsap.to('#sandikalaSubblock',{opacity:1,ease:'none',
+    scrollTrigger:{trigger:'#sandikala',start:'top top',end:'15% top',scrub:true}
+  });
+  gsap.to('#sandikalaSubblock',{opacity:0,y:-40,ease:'none',
+    scrollTrigger:{trigger:'#sandikala',start:'55% top',end:'70% top',scrub:true}
   });
 
   // Odometer
@@ -599,6 +602,9 @@ function initAll(){
   window.addEventListener('scroll',function(){
     document.querySelector('nav').classList.toggle('scrolled',window.scrollY>60);
   });
+
+  // Recompute layouts after init
+  setTimeout(function(){ScrollTrigger.refresh()},200);
 }
 
 // ═══ KINETIC MARQUEE — scroll-velocity reactive ═══
@@ -665,8 +671,6 @@ function initAll(){
   });
   btn.addEventListener('mouseleave',function(){btn.style.transform='translate(0,0)'});
 })();
-
-if(window.lucide){lucide.createIcons()}
 </script>
 </body>
 </html>
