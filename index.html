@@ -69,7 +69,7 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(13,10,8,.85)}
 .mask-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3}
 .mask-text-outline{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,15vw,220px);font-weight:500;letter-spacing:.01em;line-height:.92;text-align:center;text-transform:uppercase;color:transparent;-webkit-text-stroke:2px rgba(245,237,224,.55);text-shadow:0 2px 30px rgba(0,0,0,.8)}
 .mask-reveal{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;clip-path:inset(100% 0 0 0)}
-.mask-text-filled{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,15vw,220px);font-weight:500;letter-spacing:.01em;line-height:.92;text-align:center;text-transform:uppercase;-webkit-background-clip:text;background-clip:text;color:transparent;background:linear-gradient(135deg,var(--sunset) 0%,var(--gold) 45%,var(--sunset) 100%)}
+.mask-text-filled{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,15vw,220px);font-weight:500;letter-spacing:.01em;line-height:.92;text-align:center;text-transform:uppercase;background:linear-gradient(135deg,var(--sunset) 0%,var(--gold) 45%,var(--sunset) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 .mask-subblock{position:absolute;bottom:14%;left:50%;transform:translateX(-50%);text-align:center;z-index:5;opacity:0;display:flex;flex-direction:column;align-items:center;gap:14px}
 .mask-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2vw,22px);color:var(--text);background:rgba(12,10,8,.7);padding:5px 16px;display:inline-block;backdrop-filter:blur(5px);line-height:1.4;max-width:42ch}
 .mask-hint{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--body);letter-spacing:.3em;text-transform:uppercase;background:rgba(12,10,8,.7);padding:5px 14px;display:inline-block;backdrop-filter:blur(5px)}
@@ -103,7 +103,8 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(13,10,8,.85)}
 .stack-container{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
 .stack-visual{position:sticky;top:110px;height:fit-content}
 .stack-visual-frame{position:relative;background:#000;border:1px solid var(--border);border-radius:16px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 30px 70px rgba(0,0,0,.4)}
-.stack-canvas{position:absolute;top:0;left:0;display:block;z-index:1}
+.stack-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s cubic-bezier(.16,1,.3,1);z-index:1}
+.stack-still.active{opacity:1}
 .stack-grad{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(13,10,8,.6) 85%,rgba(13,10,8,.95) 100%);z-index:2;pointer-events:none}
 .stack-caption{position:absolute;left:0;right:0;bottom:24px;height:60px;z-index:3;pointer-events:none}
 .stack-caption .time{position:absolute;left:50%;bottom:0;transform:translateX(-50%) translateY(14px);white-space:nowrap;opacity:0;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--text);background:rgba(12,10,8,.75);padding:6px 14px;backdrop-filter:blur(5px);border:1px solid rgba(245,237,224,.08);border-radius:4px;transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1)}
@@ -267,7 +268,9 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   <div class="stack-container">
     <div class="stack-visual">
       <div class="stack-visual-frame">
-        <canvas id="stack-canvas" class="stack-canvas"></canvas>
+        <img class="stack-still active" data-still="1" src="assets/stack-1.jpg" alt="Coast at golden hour">
+        <img class="stack-still" data-still="2" src="assets/stack-2.jpg" alt="High tide, temple silhouette">
+        <img class="stack-still" data-still="3" src="assets/stack-3.jpg" alt="Firelight sunset">
         <div class="stack-grad"></div>
         <div class="stack-caption">
           <span class="time active" data-caption="1"><strong>15:00</strong>Golden hour begins</span>
@@ -442,7 +445,6 @@ gsap.registerPlugin(ScrollTrigger);
 // ═══ THREE FRAME SEQUENCES — hero (canang), stack (silhouette), sandikala (penjor) ═══
 var SETS={
   hero:{prefix:'assets/frames/',total:121,frames:[],loaded:0,canvas:document.getElementById('hero-canvas'),cover:true},
-  stack:{prefix:'assets/frames_silhouette/',total:121,frames:[],loaded:0,canvas:document.getElementById('stack-canvas'),cover:true},
   sandikala:{prefix:'assets/frames_penjor/',total:121,frames:[],loaded:0,canvas:document.getElementById('sandikala-canvas'),cover:true}
 };
 Object.keys(SETS).forEach(function(k){SETS[k].ctx=SETS[k].canvas.getContext('2d')});
@@ -490,27 +492,16 @@ function sizeViewportCanvases(){
   drawCover(SETS.hero,currentFrame.hero);
   drawCover(SETS.sandikala,currentFrame.sandikala);
 }
-// Container-sized canvas (stack)
-function sizeStackCanvas(){
-  var frame=document.querySelector('.stack-visual-frame');
-  if(!frame)return;
-  var r=frame.getBoundingClientRect();
-  sizeCanvas(SETS.stack.canvas,Math.round(r.width),Math.round(r.height));
-  drawCover(SETS.stack,currentFrame.stack);
-}
-var currentFrame={hero:0,stack:0,sandikala:0};
-window.addEventListener('resize',function(){sizeViewportCanvases();sizeStackCanvas()});
-
+var currentFrame={hero:0,sandikala:0};
+window.addEventListener('resize',sizeViewportCanvases);
 sizeViewportCanvases();
-sizeStackCanvas();
 
-// Preload
+// Preload hero first, defer sandikala until later
 preloadSet(SETS.hero);
-preloadSet(SETS.stack);
-preloadSet(SETS.sandikala);
+setTimeout(function(){preloadSet(SETS.sandikala)},300);
 
 // Safety init (if loader stuck)
-setTimeout(function(){if(!inited){document.getElementById('loader').classList.add('done');initAll()}},7000);
+setTimeout(function(){if(!inited){document.getElementById('loader').classList.add('done');initAll()}},4500);
 
 function initAll(){
   if(inited)return;inited=true;
@@ -532,18 +523,14 @@ function initAll(){
     scrollTrigger:{trigger:'#hero',start:'55% top',end:'70% top',scrub:true}
   });
 
-  // Stack canvas — scroll-scrubbed through silhouette frames
-  gsap.to({f:0},{f:SETS.stack.total-1,snap:'f',ease:'none',
-    scrollTrigger:{trigger:'#visit',start:'top 70%',end:'bottom 30%',scrub:0.5},
-    onUpdate:function(){currentFrame.stack=Math.round(this.targets()[0].f);drawCover(SETS.stack,currentFrame.stack)}
-  });
-
-  // Sticky stack — cards + captions active by scroll
+  // Sticky stack — cards, captions, AND stills swap on active step
   var cards=document.querySelectorAll('.feature-card');
   var captions=document.querySelectorAll('.stack-caption .time');
+  var stills=document.querySelectorAll('.stack-still');
   function activate(num){
     cards.forEach(function(c){c.classList.toggle('active',c.dataset.feature===num)});
     captions.forEach(function(s){s.classList.toggle('active',s.dataset.caption===num)});
+    stills.forEach(function(s){s.classList.toggle('active',s.dataset.still===num)});
   }
   cards.forEach(function(card){
     ScrollTrigger.create({
