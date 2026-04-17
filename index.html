@@ -63,7 +63,7 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(250,247,241,.92)}
 .btn-primary:hover{box-shadow:0 10px 32px rgba(196,30,30,.35)}
 
 /* ═══ HERO CAROUSEL — auto-advancing cross-fade with Ken Burns ═══ */
-.hero-section{position:relative;min-height:300vh;background:var(--dark)}
+.hero-section{position:relative;min-height:180vh;background:var(--dark)}
 .hero-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
 .hero-slides{position:absolute;inset:0;z-index:1}
 .hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s cubic-bezier(.45,.0,.55,1);will-change:opacity}
@@ -154,15 +154,20 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(250,247,241,.92)}
 .attr-kicker{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sunset);letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
 .attr-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--text);letter-spacing:-.01em;margin-bottom:8px}
 .attr-card p{font-size:14px;color:var(--body);line-height:1.65;flex:1}
-.attr-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--muted);text-align:center;margin-top:26px}
 .attr-card[data-modal]{cursor:pointer}
-.attr-card[data-modal]::after{content:'';position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:rgba(250,247,241,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239f1414' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;z-index:3;opacity:0;transform:scale(.85);transition:opacity .25s,transform .25s cubic-bezier(.16,1,.3,1)}
-.attr-card[data-modal]:hover::after{opacity:1;transform:scale(1)}
+.attr-more{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:7px 14px;border:1px solid var(--border-strong);border-radius:999px;background:transparent;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;align-self:flex-start;transition:all .25s cubic-bezier(.16,1,.3,1)}
+.attr-more svg{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.attr-card:hover .attr-more{background:var(--accent);border-color:var(--accent);color:#fff}
+.attr-card:hover .attr-more svg{transform:translateX(3px)}
 
 /* ═══ MODAL ═══ */
 .modal-backdrop{position:fixed;inset:0;background:rgba(13,10,8,.75);backdrop-filter:blur(6px);z-index:200;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:center;padding:24px}
 .modal-backdrop.on{opacity:1;pointer-events:auto}
-.modal{max-width:720px;width:100%;max-height:88vh;overflow-y:auto;background:var(--card);border:1px solid var(--border-strong);border-radius:16px;box-shadow:0 40px 80px rgba(0,0,0,.5);transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.16,1,.3,1);position:relative}
+.modal{max-width:720px;width:100%;max-height:88vh;overflow-y:auto;background:var(--card);border:1px solid var(--border-strong);border-radius:16px;box-shadow:0 40px 80px rgba(0,0,0,.5);transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.16,1,.3,1);position:relative;scrollbar-width:thin;scrollbar-color:var(--border-strong) transparent}
+.modal::-webkit-scrollbar{width:10px}
+.modal::-webkit-scrollbar-track{background:transparent;margin:8px 0}
+.modal::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:999px;border:3px solid var(--card);min-height:40px}
+.modal::-webkit-scrollbar-thumb:hover{background:var(--sunset)}
 .modal-backdrop.on .modal{transform:translateY(0) scale(1)}
 .modal-hero{aspect-ratio:16/9;overflow:hidden;position:relative;background:#0d0a08}
 .modal-hero img{width:100%;height:100%;object-fit:cover}
@@ -195,6 +200,15 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(250,247,241,.92)}
 .spot-card .kicker{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
 .spot-card p{font-size:14px;color:var(--body);line-height:1.65;margin-bottom:18px}
 .spot-price{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--sunset);font-weight:600;letter-spacing:.02em}
+
+/* Canang ambient — small video card */
+.canang-section{padding:40px 24px 40px;max-width:860px;margin:0 auto;text-align:center}
+.canang-box{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(26,20,16,.15);background:#0d0a08}
+.canang-box video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.canang-box::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(13,10,8,.8) 100%);pointer-events:none}
+.canang-overlay{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:2;text-align:center;max-width:85%}
+.canang-overlay .eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.3em;text-transform:uppercase;margin-bottom:8px;background:rgba(12,10,8,.7);padding:4px 12px;display:inline-block;backdrop-filter:blur(4px);border:1px solid rgba(250,247,241,.12)}
+.canang-overlay .line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,1.9vw,20px);color:#faf7f1;background:rgba(12,10,8,.7);padding:6px 16px;display:inline-block;backdrop-filter:blur(4px);border:1px solid rgba(250,247,241,.12);line-height:1.4}
 
 /* Heritage */
 .heritage-section{padding:60px 24px 130px;max-width:780px;margin:0 auto;text-align:center}
@@ -433,6 +447,7 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
 <section class="attractions-section" id="attractions">
   <div class="section-label fade-up">Attractions · what you'll see</div>
   <h2 class="section-title fade-up">Eleven attractions, <em>one sacred ground.</em></h2>
+  <p style="text-align:center;color:var(--muted);font-size:14px;margin:-40px auto 44px;max-width:54ch;font-family:'Cormorant Garamond',serif;font-style:italic">Tap any card for the full story.</p>
   <div class="attr-grid">
     <div class="attr-card fade-up" data-modal="kecak">
       <div class="attr-img"><img src="assets/site/kecak.webp" alt="Kecak dance at sunset" loading="lazy"></div>
@@ -440,6 +455,7 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
         <div class="attr-kicker">Ritual · daily 18:00</div>
         <h3>Kecak &amp; Fire Dance</h3>
         <p>Fifty chanters, a single flame, and the sun on the horizon. Performed every evening at the temple amphitheatre.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
       </div>
     </div>
     <div class="attr-card fade-up" data-modal="spring">
@@ -447,7 +463,8 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
       <div class="attr-body">
         <div class="attr-kicker">Legend · Mata Air Suci</div>
         <h3>Holy Spring</h3>
-        <p>Fresh water that wells up from inside a cave beneath the rock &mdash; said to come from the middle of the sea. Priests use it to bless visitors seeking health, children, salvation.</p>
+        <p>Fresh water that wells up from inside a cave beneath the rock &mdash; said to come from the middle of the sea.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
       </div>
     </div>
     <div class="attr-card fade-up" data-modal="snake">
@@ -455,37 +472,96 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
       <div class="attr-body">
         <div class="attr-kicker">Legend · Ular Suci</div>
         <h3>Holy Snake</h3>
-        <p>The sacred sea snakes that live in the caves below the temple, believed to protect Pura Tanah Lot from evil spirits of the southern sea.</p>
+        <p>Sacred sea snakes in caves below the temple, said to guard Pura Tanah Lot from the spirits of the south sea.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
       </div>
     </div>
-    <div class="attr-card fade-up">
+    <div class="attr-card fade-up" data-modal="selfie">
       <div class="attr-img"><img src="assets/site/selfie.webp" alt="Selfie spot" loading="lazy"></div>
       <div class="attr-body">
         <div class="attr-kicker">Viewpoints · scenic</div>
         <h3>Selfie Spots</h3>
-        <p>Curated viewpoints across the grounds &mdash; lush gardens, panoramic cliffs, architectural corners. Every angle of the sunset is framed for you.</p>
+        <p>Curated viewpoints across the grounds &mdash; every angle of the sunset is framed for you.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
       </div>
     </div>
-    <div class="attr-card fade-up">
+    <div class="attr-card fade-up" data-modal="natys">
       <div class="attr-img"><img src="assets/site/natys.webp" alt="Natys Restaurant" loading="lazy"></div>
       <div class="attr-body">
         <div class="attr-kicker">Dining · post-temple</div>
         <h3>Natys Restaurant</h3>
-        <p>Open-air dining moments from the temple entrance. Balinese cuisine and fresh seafood with a front-row seat to the sunset.</p>
+        <p>Open-air Balinese dining moments from the entrance. Fresh seafood with a front-row seat to the sunset.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
       </div>
     </div>
-    <div class="attr-card fade-up">
+    <div class="attr-card fade-up" data-modal="museum">
       <div class="attr-img" style="background:linear-gradient(135deg,#2a1f16,#1a1410);display:flex;align-items:center;justify-content:center">
         <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#c96420" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" style="opacity:.85"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/><path d="M10 11h4"/></svg>
       </div>
       <div class="attr-body">
         <div class="attr-kicker">Culture · museum</div>
         <h3>Majapahit Museum</h3>
-        <p>Exhibits on the 16th-century Majapahit court and Dang Hyang Nirartha &mdash; the priest whose meditation on this rock became the temple itself.</p>
+        <p>Exhibits on the 16th-century Majapahit court and Dang Hyang Nirartha &mdash; whose meditation on this rock became the temple.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </div>
+    </div>
+    <div class="attr-card fade-up" data-modal="sunset-terrace">
+      <div class="attr-img"><img src="assets/site/sunset-terrace.webp" alt="Sunset Terrace" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">View · Teras Matahari</div>
+        <h3>Sunset Terrace</h3>
+        <p>A purpose-built cliffside terrace giving the cleanest frontal view of the temple silhouette as the sun sets into the sea.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </div>
+    </div>
+    <div class="attr-card fade-up" data-modal="enjung-galuh">
+      <div class="attr-img"><img src="assets/site/enjung-galuh.webp" alt="Enjung Galuh Area" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">View · Enjung Galuh</div>
+        <h3>Enjung Galuh</h3>
+        <p>A grassy cliff-edge lawn with panoramic ocean views &mdash; popular for weddings, photography, and slow afternoon walks.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </div>
+    </div>
+    <div class="attr-card fade-up" data-modal="tri-antaka">
+      <div class="attr-img"><img src="assets/site/tri-antaka.webp" alt="Tri Antaka Monument" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Monument · Tri Antaka</div>
+        <h3>Tri Antaka Monument</h3>
+        <p>A three-pillar stone memorial honouring local heroes of Bali's history. Carved in the traditional Balinese style.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </div>
+    </div>
+    <div class="attr-card fade-up" data-modal="art-market">
+      <div class="attr-img"><img src="assets/site/art-market.webp" alt="Art Market" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Shopping · Pasar Seni</div>
+        <h3>Art Market</h3>
+        <p>Over a hundred stalls with hand-batik sarongs, carved wooden masks, paintings, jewellery, and small offerings &mdash; the longest part of most visits.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </div>
+    </div>
+    <div class="attr-card fade-up" data-modal="yeh-kutikan">
+      <div class="attr-img"><img src="assets/site/yeh-kutikan.webp" alt="Yeh Kutikan" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Water · Yeh Kutikan</div>
+        <h3>Yeh Kutikan</h3>
+        <p>A second holy-water source on the grounds, quieter than Tirta Pabersihan &mdash; locals come here for blessings before festivals.</p>
+        <span class="attr-more">Read more <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
       </div>
     </div>
   </div>
-  <div class="attr-note">Also on the grounds: Sunset Terrace &middot; Enjung Galuh Area &middot; Tri Antaka Monument &middot; Art Market &middot; Yeh Kutikan</div>
+</section>
+
+<!-- ═══ CANANG SARI · ambient video card ═══ -->
+<section class="canang-section fade-up">
+  <div class="canang-box">
+    <video src="assets/site/canang-ambient.mp4" autoplay loop muted playsinline preload="metadata"></video>
+    <div class="canang-overlay">
+      <div class="eyebrow">Canang sari · the daily offering</div>
+      <div class="line">Every morning and every dusk &mdash; flowers, rice, and incense laid at the temple.</div>
+    </div>
+  </div>
 </section>
 
 <!-- ═══ HERITAGE ═══ -->
@@ -606,6 +682,66 @@ var MODAL_CONTENT={
          '<div class="pullquote">"And many are praying for salvation and happiness in their lives, that all hope will come true."</div>'+
          '<p>The spring, called <strong>Tirta Pabersihan</strong>, is the ritual water priests use to bless visitors. It is reachable only at low tide, when the waves pull back from the rock.</p>'+
          '<div class="meta"><span><strong>WHEN</strong>low tide only</span><span><strong>WHERE</strong>cave, temple base</span><span><strong>OFFER</strong>modest donation</span></div>'
+  },
+  selfie:{
+    img:'assets/site/selfie.webp',
+    html:'<div class="kicker">Viewpoints · spot swafoto</div><h3>Selfie <em>Spots</em></h3>'+
+         '<p>Every corner of our sprawling 28-hectare landscape has been thought of as a frame. Scattered throughout the area are selfie spots, each a different backdrop &mdash; lush gardens, panoramic ocean viewpoints, architectural detail of the temple compound, silhouettes against the sunset sky.</p>'+
+         '<p>The spots are marked with small signs and often have platforms or benches. Come at golden hour; wait 15 minutes for the best colour.</p>'+
+         '<div class="meta"><span><strong>BEST AT</strong>golden hour</span><span><strong>COUNT</strong>8+ spots</span><span><strong>FEE</strong>included</span></div>'
+  },
+  natys:{
+    img:'assets/site/natys.webp',
+    html:'<div class="kicker">Dining · restaurant</div><h3>Naty\'s <em>Restaurant</em></h3>'+
+         '<p>A natural stop after the temple &mdash; open-air, casual, with a view that matches the sunset you just walked through.</p>'+
+         '<p>The menu features Balinese cuisine rich in spices and heart, alongside international classics. Seafood is caught fresh each morning; vegetarian curries, sambal, and sate lilit are house specialities. Indoor seating and shaded outdoor terraces available.</p>'+
+         '<div class="pullquote">"A meal that matches the majesty of the view."</div>'+
+         '<p>Reservations: <strong>+62 813 3785 6986</strong> &middot; Website: <a href="https://natysrestaurant.com/natys-tanah-lot/" style="color:var(--sunset);text-decoration:none;border-bottom:1px solid var(--sunset)">natysrestaurant.com</a></p>'+
+         '<div class="meta"><span><strong>CUISINE</strong>Balinese + international</span><span><strong>WHEN</strong>lunch + dinner</span><span><strong>BOOK</strong>by phone</span></div>'
+  },
+  museum:{
+    img:'',
+    html:'<div class="kicker">Culture · Majapahit</div><h3>Majapahit <em>Tanah Lot Museum</em></h3>'+
+         '<p>A small but thoughtful museum on the temple grounds documenting the 16th-century Majapahit empire of East Java and the journey of <strong>Dang Hyang Dwi Jendra</strong> (Dang Hyang Nirartha) &mdash; the priest who meditated on this rock and ordered the shrine built.</p>'+
+         '<p>Exhibits include palm-leaf manuscripts (<em>lontar</em>), Balinese Hindu iconography, maps of the seven sea temples, and the linet / lod etymologies of the name Tanah Lot itself.</p>'+
+         '<div class="meta"><span><strong>WHEN</strong>daytime hours</span><span><strong>FEE</strong>included with entrance</span><span><strong>LANGUAGE</strong>ID + EN</span></div>'
+  },
+  "sunset-terrace":{
+    img:'assets/site/sunset-terrace.webp',
+    html:'<div class="kicker">View · Teras Matahari</div><h3>Sunset <em>Terrace</em></h3>'+
+         '<p>The main western-facing terrace on the cliff, built to give visitors the cleanest possible frontal view of the Pura Luhur Tanah Lot silhouette as the sun sets into the Indian Ocean.</p>'+
+         '<p>Tiered seating with stone balustrades and shade awnings, a paved photography platform, and warungs nearby for drinks. Arrive by 17:00 to claim a spot; photographers typically set up their tripods an hour before sundown.</p>'+
+         '<div class="pullquote">"The single most photographed view in Bali."</div>'+
+         '<div class="meta"><span><strong>BEST</strong>17:00 onward</span><span><strong>FACING</strong>west-southwest</span><span><strong>FEE</strong>included</span></div>'
+  },
+  "enjung-galuh":{
+    img:'assets/site/enjung-galuh.webp',
+    html:'<div class="kicker">View · Enjung Galuh area</div><h3>Enjung <em>Galuh</em></h3>'+
+         '<p>A grassy cliff-edge area slightly north of the main temple, offering a long, sweeping ocean view uninterrupted by the temple rock itself. Popular for weddings, pre-wedding photoshoots, and slow afternoon walks.</p>'+
+         '<p>The selfie spot here was refurbished and reopened in 2022 and is a favourite among locals for its quiet, elevated perspective. Traditional Balinese penjor are sometimes set up here during religious ceremonies.</p>'+
+         '<div class="meta"><span><strong>BEST</strong>late afternoon</span><span><strong>MOOD</strong>quiet, scenic</span><span><strong>FEE</strong>included</span></div>'
+  },
+  "tri-antaka":{
+    img:'assets/site/tri-antaka.webp',
+    html:'<div class="kicker">Monument · Tri Antaka</div><h3>Tri Antaka <em>Monument</em></h3>'+
+         '<p>A three-pillar memorial on the grounds commemorating local heroes &mdash; <em>tri</em> meaning three, <em>antaka</em> meaning end or farewell. Carved in dark volcanic stone in the traditional Balinese style, the monument is a small but meaningful stop between the main entrance and the temple.</p>'+
+         '<p>Small offerings are placed at its base daily by local guardians. Visitors are welcome to pause and observe; respectful silence is appreciated.</p>'+
+         '<div class="meta"><span><strong>MOOD</strong>reflective</span><span><strong>TIME</strong>5 min stop</span><span><strong>FEE</strong>included</span></div>'
+  },
+  "art-market":{
+    img:'assets/site/art-market.webp',
+    html:'<div class="kicker">Shopping · Pasar Seni</div><h3>Art <em>Market</em></h3>'+
+         '<p>The longest part of most visits: over a hundred stalls lining the path from the parking lot to the temple itself. Hand-batik sarongs, carved wooden Barong masks, paintings of Bali\'s rice terraces, silver jewellery, ceramic offerings, woven rattan baskets, small wood carvings of Ganesha, bamboo wind chimes.</p>'+
+         '<p>Haggling is expected and friendly. Start at roughly 40% of the opening price and meet in the middle. Almost every stall ships internationally if you ask.</p>'+
+         '<p>The IKM Corner at the entrance showcases government-supported local crafters &mdash; fixed prices, direct from the maker.</p>'+
+         '<div class="meta"><span><strong>STALLS</strong>100+</span><span><strong>PAYMENT</strong>cash + card</span><span><strong>SHIP</strong>international</span></div>'
+  },
+  "yeh-kutikan":{
+    img:'assets/site/yeh-kutikan.webp',
+    html:'<div class="kicker">Water · Yeh Kutikan</div><h3>Yeh <em>Kutikan</em></h3>'+
+         '<p><em>Yeh</em> means water in Balinese; Yeh Kutikan is a second holy-water source on the grounds, quieter and less known than Tirta Pabersihan.</p>'+
+         '<p>Locals come here for blessings before major religious festivals &mdash; Galungan, Kuningan, Nyepi &mdash; and before life events like weddings. The surrounding grove is shaded and cool, a welcome contrast to the sun-exposed terraces above.</p>'+
+         '<div class="meta"><span><strong>MOOD</strong>quiet, shaded</span><span><strong>TIME</strong>10 min stop</span><span><strong>OFFER</strong>optional</span></div>'
   }
 };
 </script>
@@ -718,15 +854,15 @@ function initAll(){
     document.addEventListener('visibilitychange',function(){document.hidden?stop():start()});
   })();
 
-  // Hero text-mask reveal
+  // Hero text-mask reveal — tighter window fits 180vh section
   gsap.to('#heroReveal',{clipPath:'inset(0% 0 0 0)',ease:'none',
-    scrollTrigger:{trigger:'#hero',start:'top top',end:'60% bottom',scrub:0.3}
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom bottom',scrub:0.3}
   });
   gsap.to('#heroSubblock',{opacity:1,ease:'none',
-    scrollTrigger:{trigger:'#hero',start:'top top',end:'15% top',scrub:true}
+    scrollTrigger:{trigger:'#hero',start:'top top',end:'20% top',scrub:true}
   });
   gsap.to('#heroSubblock',{opacity:0,y:-40,ease:'none',
-    scrollTrigger:{trigger:'#hero',start:'55% top',end:'70% top',scrub:true}
+    scrollTrigger:{trigger:'#hero',start:'70% top',end:'95% top',scrub:true}
   });
 
   // Sticky stack — cards, captions, AND stills swap on active step
