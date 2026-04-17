@@ -62,11 +62,19 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(250,247,241,.92)}
 .btn-primary{background:var(--accent);color:#fff;padding:16px 36px;border-radius:40px;font-family:'Outfit',sans-serif;font-weight:600;font-size:15px;letter-spacing:.02em;text-decoration:none;transition:all .2s cubic-bezier(.16,1,.3,1);border:none;cursor:pointer;will-change:transform;display:inline-block}
 .btn-primary:hover{box-shadow:0 10px 32px rgba(196,30,30,.35)}
 
-/* ═══ MASK SECTIONS (hero + sandikala) — video stays dark, overlay keeps strong ═══ */
+/* ═══ HERO CAROUSEL — cross-fading real photos with Ken Burns ═══ */
+.hero-section{position:relative;min-height:380vh;background:var(--dark)}
+.hero-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
+.hero-slides{position:absolute;inset:0;z-index:1}
+.hero-slide{position:absolute;inset:0;opacity:0;will-change:opacity,transform}
+.hero-slide img{width:100%;height:100%;object-fit:cover;display:block;will-change:transform}
+.hero-slide.on{opacity:1}
+/* Sandikala still uses mask pattern */
 .mask-section{position:relative;min-height:300vh;background:var(--dark)}
 .mask-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000}
 .mask-canvas{position:absolute;top:0;left:0;display:block;z-index:1}
 .mask-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,10,8,.5) 0%,rgba(13,10,8,.35) 50%,rgba(13,10,8,.75) 100%);z-index:2}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,10,8,.45) 0%,rgba(13,10,8,.3) 50%,rgba(13,10,8,.75) 100%);z-index:2;pointer-events:none}
 .mask-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3}
 .mask-text-outline{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,15vw,220px);font-weight:500;letter-spacing:.01em;line-height:.92;text-align:center;text-transform:uppercase;color:transparent;-webkit-text-stroke:2px rgba(250,247,241,.55);text-shadow:0 2px 30px rgba(0,0,0,.8)}
 .mask-reveal{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;clip-path:inset(100% 0 0 0)}
@@ -132,6 +140,34 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(250,247,241,.92)}
 .attr-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--text);letter-spacing:-.01em;margin-bottom:8px}
 .attr-card p{font-size:14px;color:var(--body);line-height:1.65;flex:1}
 .attr-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--muted);text-align:center;margin-top:26px}
+.attr-card[data-modal]{cursor:pointer}
+.attr-card[data-modal]::after{content:'';position:absolute;top:14px;right:14px;width:28px;height:28px;border-radius:50%;background:rgba(250,247,241,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239f1414' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;z-index:3;opacity:0;transform:scale(.85);transition:opacity .25s,transform .25s cubic-bezier(.16,1,.3,1)}
+.attr-card[data-modal]:hover::after{opacity:1;transform:scale(1)}
+
+/* ═══ MODAL ═══ */
+.modal-backdrop{position:fixed;inset:0;background:rgba(13,10,8,.75);backdrop-filter:blur(6px);z-index:200;opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:center;padding:24px}
+.modal-backdrop.on{opacity:1;pointer-events:auto}
+.modal{max-width:720px;width:100%;max-height:88vh;overflow-y:auto;background:var(--card);border:1px solid var(--border-strong);border-radius:16px;box-shadow:0 40px 80px rgba(0,0,0,.5);transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.16,1,.3,1);position:relative}
+.modal-backdrop.on .modal{transform:translateY(0) scale(1)}
+.modal-hero{aspect-ratio:16/9;overflow:hidden;position:relative;background:#0d0a08}
+.modal-hero img{width:100%;height:100%;object-fit:cover}
+.modal-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(13,10,8,.6) 100%)}
+.modal-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(13,10,8,.65);backdrop-filter:blur(8px);border:1px solid rgba(250,247,241,.15);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:background .25s}
+.modal-close:hover{background:rgba(13,10,8,.9)}
+.modal-body{padding:32px 40px 40px}
+.modal-body .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--sunset);letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.modal-body h3{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,40px);font-weight:500;color:var(--text);letter-spacing:-.01em;margin-bottom:20px;line-height:1.1}
+.modal-body h3 em{color:var(--accent);font-style:italic}
+.modal-body p{font-size:15px;color:var(--body);line-height:1.8;margin-bottom:16px}
+.modal-body p strong{color:var(--text);font-weight:500}
+.modal-body .pullquote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--text);border-left:3px solid var(--accent);padding:14px 20px;margin:20px 0;background:rgba(159,20,20,.04)}
+.modal-body .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;padding-top:22px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.modal-body .meta span strong{color:var(--sunset);font-weight:600;margin-right:6px}
+@media(max-width:600px){.modal-body{padding:24px 24px 32px}.modal-hero{aspect-ratio:4/3}}
+
+/* Back to top CTA link */
+.back-to-top{display:inline-block;margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.65);text-decoration:none;letter-spacing:.18em;text-transform:uppercase;transition:color .25s;border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:2px;position:relative}
+.back-to-top:hover{color:var(--sunset);border-color:var(--sunset)}
 
 /* ═══ SPOTLIGHT + TILT · TICKET CARDS ═══ */
 .tickets-section{padding:60px 24px 130px;max-width:1100px;margin:0 auto}
@@ -221,11 +257,18 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   </div>
 </nav>
 
-<!-- ═══ HERO · "TANAH LOT" text-mask with canang-sari frames ═══ -->
-<section class="mask-section" id="hero">
-  <div class="mask-sticky">
-    <canvas id="hero-canvas" class="mask-canvas"></canvas>
-    <div class="mask-overlay"></div>
+<!-- ═══ HERO · real photos from tanahlot.id gallery, cross-fading with Ken Burns ═══ -->
+<section class="hero-section" id="hero">
+  <div class="hero-sticky">
+    <div class="hero-slides">
+      <div class="hero-slide on" data-slide="0"><img src="assets/site/real-1.webp" alt="Tanah Lot aerial" loading="eager" fetchpriority="high"></div>
+      <div class="hero-slide" data-slide="1"><img src="assets/site/real-2.webp" alt="Tanah Lot temple rock" loading="eager"></div>
+      <div class="hero-slide" data-slide="2"><img src="assets/site/real-3.webp" alt="Tanah Lot at sunset" loading="lazy"></div>
+      <div class="hero-slide" data-slide="3"><img src="assets/site/real-4.webp" alt="Tanah Lot temple" loading="lazy"></div>
+      <div class="hero-slide" data-slide="4"><img src="assets/site/real-5.webp" alt="Tanah Lot coast" loading="lazy"></div>
+      <div class="hero-slide" data-slide="5"><img src="assets/site/real-6.webp" alt="Tanah Lot panorama" loading="lazy"></div>
+    </div>
+    <div class="hero-overlay"></div>
     <div class="mask-text">
       <div class="mask-text-outline">Tanah<br>Lot</div>
     </div>
@@ -277,104 +320,7 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   </div>
 </section>
 
-<!-- ═══ STICKY STACK — silhouette video scrubs with scroll, steps update captions ═══ -->
-<section class="stack-section" id="visit">
-  <div class="section-label fade-up">How a visit unfolds</div>
-  <h2 class="section-title fade-up">Arrive in daylight. <em>Leave by firelight.</em></h2>
-  <div class="stack-container">
-    <div class="stack-visual">
-      <div class="stack-visual-frame">
-        <img class="stack-still active" data-still="1" src="assets/stack-1.webp" alt="Coast at golden hour">
-        <img class="stack-still" data-still="2" src="assets/stack-2.webp" alt="High tide, temple silhouette">
-        <img class="stack-still" data-still="3" src="assets/stack-3.webp" alt="Firelight sunset">
-        <div class="stack-grad"></div>
-        <div class="stack-caption">
-          <span class="time active" data-caption="1"><strong>15:00</strong>Golden hour begins</span>
-          <span class="time" data-caption="2"><strong>17:00</strong>High tide · the temple floats</span>
-          <span class="time" data-caption="3"><strong>18:00</strong>Kecak &amp; fire dance</span>
-        </div>
-      </div>
-    </div>
-    <div class="stack-features">
-      <div class="feature-card active" data-feature="1">
-        <div class="feature-num">Step 01 · Daylight</div>
-        <h3>Arrive by late afternoon</h3>
-        <p>Park inside the 2.77-hectare lot, follow the lane of stalls and incense, and let the sea air guide you toward the cliff. Plan for at least 90 minutes before sunset — the path is long, and every stone has a story.</p>
-      </div>
-      <div class="feature-card" data-feature="2">
-        <div class="feature-num">Step 02 · High tide</div>
-        <h3>Watch the temple float</h3>
-        <p>Pura Luhur Tanah Lot sits on its own island of rock. At high tide, water encircles the base and the temple appears suspended on the sea. At low tide, Balinese priests bless visitors at Tirta Pabersihan — the holy spring that wells from the rock itself.</p>
-      </div>
-      <div class="feature-card" data-feature="3">
-        <div class="feature-num">Step 03 · Firelight</div>
-        <h3>Stay for Kecak at 18:00</h3>
-        <p>Fifty men chant <em>cak cak cak</em> in a circle of firelight as the sun sinks behind the horizon. Performed daily. No music, no instruments — only voices, rhythm, and the sea below.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ATTRACTIONS · real photos from tanahlot.id ═══ -->
-<section class="attractions-section" id="attractions">
-  <div class="section-label fade-up">Attractions · what you'll see</div>
-  <h2 class="section-title fade-up">Eleven attractions, <em>one sacred ground.</em></h2>
-  <div class="attr-grid">
-    <div class="attr-card fade-up">
-      <div class="attr-img"><img src="assets/site/kecak.webp" alt="Kecak dance at sunset" loading="lazy"></div>
-      <div class="attr-body">
-        <div class="attr-kicker">Ritual · daily 18:00</div>
-        <h3>Kecak &amp; Fire Dance</h3>
-        <p>Fifty chanters, a single flame, and the sun on the horizon. Performed every evening at the temple amphitheatre.</p>
-      </div>
-    </div>
-    <div class="attr-card fade-up">
-      <div class="attr-img"><img src="assets/site/spring.webp" alt="Holy Spring" loading="lazy"></div>
-      <div class="attr-body">
-        <div class="attr-kicker">Legend · Mata Air Suci</div>
-        <h3>Holy Spring</h3>
-        <p>Fresh water that wells up from inside a cave beneath the rock &mdash; said to come from the middle of the sea. Priests use it to bless visitors seeking health, children, salvation.</p>
-      </div>
-    </div>
-    <div class="attr-card fade-up">
-      <div class="attr-img"><img src="assets/site/snake.webp" alt="Holy Snake (Ular Suci)" loading="lazy"></div>
-      <div class="attr-body">
-        <div class="attr-kicker">Legend · Ular Suci</div>
-        <h3>Holy Snake</h3>
-        <p>The sacred sea snakes that live in the caves below the temple, believed to protect Pura Tanah Lot from evil spirits of the southern sea.</p>
-      </div>
-    </div>
-    <div class="attr-card fade-up">
-      <div class="attr-img"><img src="assets/site/selfie.webp" alt="Selfie spot" loading="lazy"></div>
-      <div class="attr-body">
-        <div class="attr-kicker">Viewpoints · scenic</div>
-        <h3>Selfie Spots</h3>
-        <p>Curated viewpoints across the grounds &mdash; lush gardens, panoramic cliffs, architectural corners. Every angle of the sunset is framed for you.</p>
-      </div>
-    </div>
-    <div class="attr-card fade-up">
-      <div class="attr-img"><img src="assets/site/natys.webp" alt="Natys Restaurant" loading="lazy"></div>
-      <div class="attr-body">
-        <div class="attr-kicker">Dining · post-temple</div>
-        <h3>Natys Restaurant</h3>
-        <p>Open-air dining moments from the temple entrance. Balinese cuisine and fresh seafood with a front-row seat to the sunset.</p>
-      </div>
-    </div>
-    <div class="attr-card fade-up">
-      <div class="attr-img" style="background:linear-gradient(135deg,#2a1f16,#1a1410);display:flex;align-items:center;justify-content:center">
-        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#c96420" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" style="opacity:.85"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/><path d="M10 11h4"/></svg>
-      </div>
-      <div class="attr-body">
-        <div class="attr-kicker">Culture · museum</div>
-        <h3>Majapahit Museum</h3>
-        <p>Exhibits on the 16th-century Majapahit court and Dang Hyang Nirartha &mdash; the priest whose meditation on this rock became the temple itself.</p>
-      </div>
-    </div>
-  </div>
-  <div class="attr-note">Also on the grounds: Sunset Terrace &middot; Enjung Galuh Area &middot; Tri Antaka Monument &middot; Art Market &middot; Yeh Kutikan</div>
-</section>
-
-<!-- ═══ SPOTLIGHT + TILT · TICKET CARDS ═══ -->
+<!-- ═══ TICKETS — moved early: commerce upfront ═══ -->
 <section class="tickets-section" id="tickets">
   <div class="section-label fade-up">Entrance tickets · harga tiket</div>
   <h2 class="section-title fade-up">Straight from the <em>official price list.</em></h2>
@@ -422,6 +368,103 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   </div>
 </section>
 
+<!-- ═══ STICKY STACK — silhouette stills scrolls with steps ═══ -->
+<section class="stack-section" id="visit">
+  <div class="section-label fade-up">How a visit unfolds</div>
+  <h2 class="section-title fade-up">Arrive in daylight. <em>Leave by firelight.</em></h2>
+  <div class="stack-container">
+    <div class="stack-visual">
+      <div class="stack-visual-frame">
+        <img class="stack-still active" data-still="1" src="assets/stack-1.webp" alt="Coast at golden hour">
+        <img class="stack-still" data-still="2" src="assets/stack-2.webp" alt="High tide, temple silhouette">
+        <img class="stack-still" data-still="3" src="assets/stack-3.webp" alt="Firelight sunset">
+        <div class="stack-grad"></div>
+        <div class="stack-caption">
+          <span class="time active" data-caption="1"><strong>15:00</strong>Golden hour begins</span>
+          <span class="time" data-caption="2"><strong>17:00</strong>High tide · the temple floats</span>
+          <span class="time" data-caption="3"><strong>18:00</strong>Kecak &amp; fire dance</span>
+        </div>
+      </div>
+    </div>
+    <div class="stack-features">
+      <div class="feature-card active" data-feature="1">
+        <div class="feature-num">Step 01 · Daylight</div>
+        <h3>Arrive by late afternoon</h3>
+        <p>Park inside the 2.77-hectare lot, follow the lane of stalls and incense, and let the sea air guide you toward the cliff. Plan for at least 90 minutes before sunset — the path is long, and every stone has a story.</p>
+      </div>
+      <div class="feature-card" data-feature="2">
+        <div class="feature-num">Step 02 · High tide</div>
+        <h3>Watch the temple float</h3>
+        <p>Pura Luhur Tanah Lot sits on its own island of rock. At high tide, water encircles the base and the temple appears suspended on the sea. At low tide, Balinese priests bless visitors at Tirta Pabersihan — the holy spring that wells from the rock itself.</p>
+      </div>
+      <div class="feature-card" data-feature="3">
+        <div class="feature-num">Step 03 · Firelight</div>
+        <h3>Stay for Kecak at 18:00</h3>
+        <p>Fifty men chant <em>cak cak cak</em> in a circle of firelight as the sun sinks behind the horizon. Performed daily. No music, no instruments — only voices, rhythm, and the sea below.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ATTRACTIONS · real photos from tanahlot.id ═══ -->
+<section class="attractions-section" id="attractions">
+  <div class="section-label fade-up">Attractions · what you'll see</div>
+  <h2 class="section-title fade-up">Eleven attractions, <em>one sacred ground.</em></h2>
+  <div class="attr-grid">
+    <div class="attr-card fade-up" data-modal="kecak">
+      <div class="attr-img"><img src="assets/site/kecak.webp" alt="Kecak dance at sunset" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Ritual · daily 18:00</div>
+        <h3>Kecak &amp; Fire Dance</h3>
+        <p>Fifty chanters, a single flame, and the sun on the horizon. Performed every evening at the temple amphitheatre.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up" data-modal="spring">
+      <div class="attr-img"><img src="assets/site/spring.webp" alt="Holy Spring" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Legend · Mata Air Suci</div>
+        <h3>Holy Spring</h3>
+        <p>Fresh water that wells up from inside a cave beneath the rock &mdash; said to come from the middle of the sea. Priests use it to bless visitors seeking health, children, salvation.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up" data-modal="snake">
+      <div class="attr-img"><img src="assets/site/snake.webp" alt="Holy Snake (Ular Suci)" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Legend · Ular Suci</div>
+        <h3>Holy Snake</h3>
+        <p>The sacred sea snakes that live in the caves below the temple, believed to protect Pura Tanah Lot from evil spirits of the southern sea.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up">
+      <div class="attr-img"><img src="assets/site/selfie.webp" alt="Selfie spot" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Viewpoints · scenic</div>
+        <h3>Selfie Spots</h3>
+        <p>Curated viewpoints across the grounds &mdash; lush gardens, panoramic cliffs, architectural corners. Every angle of the sunset is framed for you.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up">
+      <div class="attr-img"><img src="assets/site/natys.webp" alt="Natys Restaurant" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Dining · post-temple</div>
+        <h3>Natys Restaurant</h3>
+        <p>Open-air dining moments from the temple entrance. Balinese cuisine and fresh seafood with a front-row seat to the sunset.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up">
+      <div class="attr-img" style="background:linear-gradient(135deg,#2a1f16,#1a1410);display:flex;align-items:center;justify-content:center">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#c96420" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" style="opacity:.85"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/><path d="M10 11h4"/></svg>
+      </div>
+      <div class="attr-body">
+        <div class="attr-kicker">Culture · museum</div>
+        <h3>Majapahit Museum</h3>
+        <p>Exhibits on the 16th-century Majapahit court and Dang Hyang Nirartha &mdash; the priest whose meditation on this rock became the temple itself.</p>
+      </div>
+    </div>
+  </div>
+  <div class="attr-note">Also on the grounds: Sunset Terrace &middot; Enjung Galuh Area &middot; Tri Antaka Monument &middot; Art Market &middot; Yeh Kutikan</div>
+</section>
+
 <!-- ═══ HERITAGE ═══ -->
 <section class="heritage-section fade-up" id="heritage">
   <div class="section-label">Heritage &middot; sejarah</div>
@@ -461,10 +504,11 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
 <section class="cta-section" id="cta">
   <div class="cta-box fade-up">
     <h2>Come for <em>sandikala.</em></h2>
-    <p>Open daily 07:00 &ndash; 19:00 &middot; Kecak &amp; fire dance at sundown.<br>Come for a day, stay for the ritual.</p>
+    <p>Open daily 07:00 &ndash; 19:00 &middot; Kecak &amp; fire dance at sundown.<br>From <strong style="color:var(--sunset)">IDR 20,000</strong> for resident children to <strong style="color:var(--sunset)">IDR 75,000</strong> for international visitors.</p>
     <div class="magnetic-cta" id="ctaMagnetic">
       <a href="tel:+62361880361" class="btn-primary">Call the temple office &rarr;</a>
     </div>
+    <br><a href="#tickets" class="back-to-top">&uarr; Back to ticket prices</a>
     <div class="cta-contact">
       <a href="tel:+62361880361">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -498,6 +542,50 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
   <div class="bali-word">&mdash; Om Swastiastu &mdash;</div>
 </footer>
 
+<!-- ═══ MODAL — full-story overlays for attractions ═══ -->
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal" id="modal">
+    <div class="modal-hero"><img id="modalImg" src="" alt=""></div>
+    <button class="modal-close" id="modalClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+var MODAL_CONTENT={
+  kecak:{
+    img:'assets/site/kecak.webp',
+    html:'<div class="kicker">Ritual · Tari Kecak</div><h3>Kecak &amp; <em>Fire Dance</em></h3>'+
+         '<p>Fifty to a hundred men sit in concentric circles, bare-chested in checkered black-and-white <em>poleng</em> cloth, and chant "cak cak cak" in shifting rhythm and volume &mdash; a driving percussive wall of voices that replaces traditional gamelan.</p>'+
+         '<p>The story is a fragment of the <em>Ramayana</em>: Prince <strong>Rama</strong>\'s wife <strong>Sita</strong> is abducted by the demon-king <strong>Ravana</strong>; the white monkey-general <strong>Hanuman</strong> helps rescue her. Characters enter the circle in carved masks and gold headdresses, the story unfolding against chant and firelight.</p>'+
+         '<div class="pullquote">"No music, no instruments &mdash; only voices, rhythm, and the sea below."</div>'+
+         '<p>Kecak at Tanah Lot is staged at the cliffside amphitheatre <strong>every evening at 18:00</strong>, the performance timed so the final battle plays out as the sun touches the horizon. A fire is lit in the centre; in the climax the monkey warrior sometimes walks across hot coals.</p>'+
+         '<p>Runtime: around one hour. Seats fill 30 minutes before start.</p>'+
+         '<div class="meta"><span><strong>WHEN</strong>daily 18:00</span><span><strong>WHERE</strong>temple amphitheatre</span><span><strong>DURATION</strong>~60 min</span></div>'
+  },
+  snake:{
+    img:'assets/site/snake.webp',
+    html:'<div class="kicker">Legend · Ular Suci</div><h3>The <em>Holy Snake</em></h3>'+
+         '<p>Beneath Pura Tanah Lot, in a cave at the base of the rock, live small black-and-white striped sea kraits &mdash; known locally as <strong>Ular Suci</strong>, the holy snakes. They are said to guard the temple from evil and to curse anyone who would desecrate it.</p>'+
+         '<div class="pullquote">"According to legend, they were once the sash of Dang Hyang Nirartha."</div>'+
+         '<p>After the 16th-century priest meditated on this rock and ordered the temple built, he left his sash on the cave floor; the gods transformed it into the snakes that still protect the shrine today.</p>'+
+         '<p>The snakes are rarely aggressive and almost never bite. They spend their days curled in the dark corners of the cave. During low tide, visitors can walk down to the rock and see them, often gently shown by the attending priest who blesses visitors with holy water from the <strong>Tirta Pabersihan</strong> spring nearby.</p>'+
+         '<p>Balinese Hindus believe touching a Holy Snake brings good fortune. A small donation is traditional.</p>'+
+         '<div class="meta"><span><strong>WHEN</strong>low tide only</span><span><strong>WHERE</strong>cave beneath the rock</span><span><strong>FEE</strong>donation</span></div>'
+  },
+  spring:{
+    img:'assets/site/spring.webp',
+    html:'<div class="kicker">Legend · Mata Air Suci</div><h3>The <em>Holy Spring</em></h3>'+
+         '<p>At the base of the rock, a freshwater spring wells up from inside a sea cave &mdash; in the middle of the ocean, where no fresh water should be.</p>'+
+         '<p>The site\'s own words: "this holy spring comes from the middle of the sea." Visitors can drink it or wash their hands and face; the water is said to cure illness, grant children to those who want them, and carry blessings to those who approach it with a clean heart and sincerity.</p>'+
+         '<div class="pullquote">"And many are praying for salvation and happiness in their lives, that all hope will come true."</div>'+
+         '<p>The spring, called <strong>Tirta Pabersihan</strong>, is the ritual water priests use to bless visitors. It is reachable only at low tide, when the waves pull back from the rock.</p>'+
+         '<div class="meta"><span><strong>WHEN</strong>low tide only</span><span><strong>WHERE</strong>cave, temple base</span><span><strong>OFFER</strong>modest donation</span></div>'
+  }
+};
+</script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
@@ -518,9 +606,8 @@ gsap.registerPlugin(ScrollTrigger);
   move();
 })();
 
-// ═══ THREE FRAME SEQUENCES — hero (canang), stack (silhouette), sandikala (penjor) ═══
+// ═══ SANDIKALA FRAME SEQUENCE (penjor) ═══
 var SETS={
-  hero:{prefix:'assets/frames/',total:121,frames:[],loaded:0,canvas:document.getElementById('hero-canvas'),cover:true},
   sandikala:{prefix:'assets/frames_penjor/',total:121,frames:[],loaded:0,canvas:document.getElementById('sandikala-canvas'),cover:true}
 };
 Object.keys(SETS).forEach(function(k){SETS[k].ctx=SETS[k].canvas.getContext('2d')});
@@ -559,33 +646,54 @@ function drawCover(s,idx){
   ctx.drawImage(img,(cw-w)/2,(ch-h)/2,w,h);
 }
 
-// Viewport-sized canvases (hero + sandikala)
+// Viewport-sized canvas (sandikala only)
 function sizeViewportCanvases(){
   var w=window.innerWidth,h=window.innerHeight;
-  sizeCanvas(SETS.hero.canvas,w,h);
   sizeCanvas(SETS.sandikala.canvas,w,h);
-  drawCover(SETS.hero,currentFrame.hero);
   drawCover(SETS.sandikala,currentFrame.sandikala);
 }
-var currentFrame={hero:0,sandikala:0};
+var currentFrame={sandikala:0};
 window.addEventListener('resize',sizeViewportCanvases);
 sizeViewportCanvases();
 
-// Preload hero first, defer sandikala until later
-preloadSet(SETS.hero);
-setTimeout(function(){preloadSet(SETS.sandikala)},300);
+// Preload sandikala frames (hero uses real photos, loads natively via <img>)
+preloadSet(SETS.sandikala);
 
-// Safety init (if loader stuck)
-setTimeout(function(){if(!inited){document.getElementById('loader').classList.add('done');initAll()}},4500);
+// Hide loader as soon as first hero slide shows (no frame preload to wait for)
+(function(){
+  var firstSlide=document.querySelector('.hero-slide img');
+  function hide(){document.getElementById('loader').classList.add('done');if(!inited){initAll()}}
+  if(firstSlide && firstSlide.complete){hide()}else if(firstSlide){firstSlide.addEventListener('load',hide,{once:true});firstSlide.addEventListener('error',hide,{once:true})}
+  setTimeout(hide,3500);
+})();
 
 function initAll(){
   if(inited)return;inited=true;
 
-  // Hero canvas — scroll-scrubbed
-  gsap.to({f:0},{f:SETS.hero.total-1,snap:'f',ease:'none',
-    scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom bottom',scrub:0.3},
-    onUpdate:function(){currentFrame.hero=Math.round(this.targets()[0].f);drawCover(SETS.hero,currentFrame.hero)}
-  });
+  // Hero carousel — cross-fade 6 photos with Ken Burns zoom, scroll-driven
+  (function(){
+    var slides=document.querySelectorAll('.hero-slide');
+    var N=slides.length;
+    gsap.to({p:0},{p:1,ease:'none',
+      scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom bottom',scrub:0.4},
+      onUpdate:function(){
+        var prog=this.targets()[0].p; // 0..1
+        var idx=prog*(N-1);           // fractional slide index
+        slides.forEach(function(s,i){
+          var dist=Math.abs(i-idx);
+          var op=Math.max(0,1-dist);  // full at i==idx, 0 at i+=1
+          s.style.opacity=op.toFixed(3);
+          // Ken Burns: each slide zooms 1.0 -> 1.12, pans slightly
+          var img=s.querySelector('img');
+          var local=Math.max(0,Math.min(1,1-dist)); // 0..1 while this slide visible
+          var scale=1+0.12*local;
+          var tx=(i%2?-1:1)*6*local; // alternate pan direction
+          var ty=(-6)*local;
+          img.style.transform='scale('+scale.toFixed(3)+') translate('+tx+'px,'+ty+'px)';
+        });
+      }
+    });
+  })();
 
   // Hero text-mask reveal
   gsap.to('#heroReveal',{clipPath:'inset(0% 0 0 0)',ease:'none',
@@ -668,6 +776,36 @@ function initAll(){
   // Recompute layouts after init
   setTimeout(function(){ScrollTrigger.refresh()},200);
 }
+
+// ═══ MODAL — open on click, close on backdrop/ESC/X ═══
+(function(){
+  var backdrop=document.getElementById('modalBackdrop');
+  var modalBody=document.getElementById('modalBody');
+  var modalImg=document.getElementById('modalImg');
+  var closeBtn=document.getElementById('modalClose');
+
+  function open(key){
+    var c=MODAL_CONTENT[key];
+    if(!c)return;
+    modalImg.src=c.img;
+    modalBody.innerHTML=c.html;
+    backdrop.classList.add('on');
+    backdrop.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+  }
+  function close(){
+    backdrop.classList.remove('on');
+    backdrop.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+
+  document.querySelectorAll('[data-modal]').forEach(function(el){
+    el.addEventListener('click',function(){open(el.dataset.modal)});
+  });
+  closeBtn.addEventListener('click',close);
+  backdrop.addEventListener('click',function(e){if(e.target===backdrop)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close()});
+})();
 
 // ═══ KINETIC MARQUEE — scroll-velocity reactive ═══
 (function(){
