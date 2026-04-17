@@ -203,12 +203,21 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(250,247,241,.92)}
 
 /* Canang ambient — small video card */
 .canang-section{padding:40px 24px 40px;max-width:860px;margin:0 auto;text-align:center}
+.canang-frame{position:relative}
 .canang-box{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(26,20,16,.15);background:#0d0a08}
 .canang-box video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .canang-box::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(13,10,8,.8) 100%);pointer-events:none}
 .canang-overlay{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:2;text-align:center;max-width:85%}
 .canang-overlay .eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:.3em;text-transform:uppercase;margin-bottom:8px;background:rgba(12,10,8,.7);padding:4px 12px;display:inline-block;backdrop-filter:blur(4px);border:1px solid rgba(250,247,241,.12)}
 .canang-overlay .line{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,1.9vw,20px);color:#faf7f1;background:rgba(12,10,8,.7);padding:6px 16px;display:inline-block;backdrop-filter:blur(4px);border:1px solid rgba(250,247,241,.12);line-height:1.4}
+@media(max-width:640px){
+  .canang-section{padding:30px 20px 30px}
+  .canang-box{aspect-ratio:4/3}
+  .canang-box::after{display:none}
+  .canang-overlay{position:static;transform:none;max-width:none;margin:20px auto 0;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .canang-overlay .eyebrow{color:var(--sunset);background:transparent;backdrop-filter:none;border:0;padding:0;font-size:10.5px;margin-bottom:0}
+  .canang-overlay .line{color:var(--body);background:transparent;backdrop-filter:none;border:0;padding:0;font-size:17px;line-height:1.5;max-width:36ch}
+}
 
 /* Heritage */
 .heritage-section{padding:60px 24px 130px;max-width:780px;margin:0 auto;text-align:center}
@@ -619,8 +628,10 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
 
 <!-- ═══ CANANG SARI · ambient video card ═══ -->
 <section class="canang-section fade-up">
-  <div class="canang-box">
-    <video src="assets/site/canang-ambient.mp4" autoplay loop muted playsinline preload="metadata"></video>
+  <div class="canang-frame">
+    <div class="canang-box">
+      <video src="assets/site/canang-ambient.mp4" autoplay loop muted playsinline preload="metadata"></video>
+    </div>
     <div class="canang-overlay">
       <div class="eyebrow">Canang sari · the daily offering</div>
       <div class="line">Every morning and every dusk &mdash; flowers, rice, and incense laid at the temple.</div>
