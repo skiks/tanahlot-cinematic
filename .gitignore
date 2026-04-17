@@ -1,4 +1,7 @@
 .vercel
+node_modules/
+package.json
+package-lock.json
 
 # Git worktrees for this client (parallel branches)
 /.wt/
