@@ -50,8 +50,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;m
 /* Nav */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,241,.75);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s cubic-bezier(.16,1,.3,1),background .3s}
 nav.scrolled{border-bottom-color:var(--border);background:rgba(250,247,241,.92)}
-.nav-logo{display:flex;align-items:center;gap:12px;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:22px;letter-spacing:.01em;color:var(--text);text-decoration:none}
-.nav-mark{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:var(--accent);color:#fff;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:12px;border-radius:4px;letter-spacing:.05em}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img{height:34px;width:auto;display:block}
 .nav-links{display:flex;gap:36px;align-items:center}
 .nav-links a{color:var(--body);text-decoration:none;font-size:13px;font-weight:500;letter-spacing:.05em;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
@@ -117,6 +117,21 @@ nav.scrolled{border-bottom-color:var(--border);background:rgba(250,247,241,.92)}
 .feature-card h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;letter-spacing:-.01em;margin-bottom:12px;color:var(--text)}
 .feature-card p{font-size:15px;color:var(--body);line-height:1.75}
 .stack-features{display:flex;flex-direction:column;gap:40px;padding:30px 0}
+
+/* ═══ ATTRACTIONS — real images from tanahlot.id ═══ */
+.attractions-section{padding:60px 24px 80px;max-width:1200px;margin:0 auto}
+.attr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.attr-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;position:relative;cursor:default;transition:transform .3s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s;box-shadow:0 2px 10px rgba(26,20,16,.03);display:flex;flex-direction:column}
+.attr-card:hover{transform:translateY(-4px);border-color:rgba(201,100,32,.35);box-shadow:0 18px 40px rgba(26,20,16,.1)}
+.attr-img{position:relative;aspect-ratio:4/3;overflow:hidden;background:#0d0a08}
+.attr-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.attr-card:hover .attr-img img{transform:scale(1.06)}
+.attr-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(13,10,8,.5) 100%);pointer-events:none}
+.attr-body{padding:22px 24px 26px;display:flex;flex-direction:column;flex:1}
+.attr-kicker{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--sunset);letter-spacing:.2em;text-transform:uppercase;font-weight:600;margin-bottom:10px}
+.attr-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--text);letter-spacing:-.01em;margin-bottom:8px}
+.attr-card p{font-size:14px;color:var(--body);line-height:1.65;flex:1}
+.attr-note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--muted);text-align:center;margin-top:26px}
 
 /* ═══ SPOTLIGHT + TILT · TICKET CARDS ═══ */
 .tickets-section{padding:60px 24px 130px;max-width:1100px;margin:0 auto}
@@ -194,12 +209,12 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
 </div>
 
 <nav>
-  <a href="#" class="nav-logo">
-    <span class="nav-mark">TL</span>
-    Tanah Lot
+  <a href="#" class="nav-logo" aria-label="Tanah Lot home">
+    <img src="assets/site/logo.png" alt="Tanah Lot">
   </a>
   <div class="nav-links">
     <a href="#visit">Visit</a>
+    <a href="#attractions">Attractions</a>
     <a href="#tickets">Tickets</a>
     <a href="#heritage">Heritage</a>
     <a href="#cta" class="nav-cta">Plan your visit</a>
@@ -298,6 +313,65 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
       </div>
     </div>
   </div>
+</section>
+
+<!-- ═══ ATTRACTIONS · real photos from tanahlot.id ═══ -->
+<section class="attractions-section" id="attractions">
+  <div class="section-label fade-up">Attractions · what you'll see</div>
+  <h2 class="section-title fade-up">Eleven attractions, <em>one sacred ground.</em></h2>
+  <div class="attr-grid">
+    <div class="attr-card fade-up">
+      <div class="attr-img"><img src="assets/site/kecak.webp" alt="Kecak dance at sunset" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Ritual · daily 18:00</div>
+        <h3>Kecak &amp; Fire Dance</h3>
+        <p>Fifty chanters, a single flame, and the sun on the horizon. Performed every evening at the temple amphitheatre.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up">
+      <div class="attr-img"><img src="assets/site/spring.webp" alt="Holy Spring" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Legend · Mata Air Suci</div>
+        <h3>Holy Spring</h3>
+        <p>Fresh water that wells up from inside a cave beneath the rock &mdash; said to come from the middle of the sea. Priests use it to bless visitors seeking health, children, salvation.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up">
+      <div class="attr-img"><img src="assets/site/snake.webp" alt="Holy Snake (Ular Suci)" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Legend · Ular Suci</div>
+        <h3>Holy Snake</h3>
+        <p>The sacred sea snakes that live in the caves below the temple, believed to protect Pura Tanah Lot from evil spirits of the southern sea.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up">
+      <div class="attr-img"><img src="assets/site/selfie.webp" alt="Selfie spot" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Viewpoints · scenic</div>
+        <h3>Selfie Spots</h3>
+        <p>Curated viewpoints across the grounds &mdash; lush gardens, panoramic cliffs, architectural corners. Every angle of the sunset is framed for you.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up">
+      <div class="attr-img"><img src="assets/site/natys.webp" alt="Natys Restaurant" loading="lazy"></div>
+      <div class="attr-body">
+        <div class="attr-kicker">Dining · post-temple</div>
+        <h3>Natys Restaurant</h3>
+        <p>Open-air dining moments from the temple entrance. Balinese cuisine and fresh seafood with a front-row seat to the sunset.</p>
+      </div>
+    </div>
+    <div class="attr-card fade-up">
+      <div class="attr-img" style="background:linear-gradient(135deg,#2a1f16,#1a1410);display:flex;align-items:center;justify-content:center">
+        <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="#c96420" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round" style="opacity:.85"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/><path d="M10 11h4"/></svg>
+      </div>
+      <div class="attr-body">
+        <div class="attr-kicker">Culture · museum</div>
+        <h3>Majapahit Museum</h3>
+        <p>Exhibits on the 16th-century Majapahit court and Dang Hyang Nirartha &mdash; the priest whose meditation on this rock became the temple itself.</p>
+      </div>
+    </div>
+  </div>
+  <div class="attr-note">Also on the grounds: Sunset Terrace &middot; Enjung Galuh Area &middot; Tri Antaka Monument &middot; Art Market &middot; Yeh Kutikan</div>
 </section>
 
 <!-- ═══ SPOTLIGHT + TILT · TICKET CARDS ═══ -->
@@ -410,11 +484,12 @@ footer .bali-word{font-family:'Cormorant Garamond',serif;font-style:italic;font-
 
 <footer>
   <div class="footer-logo">
-    <span class="nav-mark">TL</span>
-    <span>Daya Tarik Wisata Tanah Lot</span>
+    <img src="assets/site/logo.png" alt="Tanah Lot" style="height:36px;width:auto">
   </div>
+  <p style="color:var(--body);font-size:13px;margin:8px 0 0;font-family:'Cormorant Garamond',serif;font-style:italic;letter-spacing:.02em">Daya Tarik Wisata Tanah Lot</p>
   <div class="foot-links">
     <a href="#visit">Visit</a>
+    <a href="#attractions">Attractions</a>
     <a href="#tickets">Tickets</a>
     <a href="#heritage">Heritage</a>
     <a href="https://www.tanahlot.id" target="_blank" rel="noreferrer">tanahlot.id</a>
