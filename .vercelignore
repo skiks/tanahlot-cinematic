@@ -1,11 +1,12 @@
+# Internal-only: not deployed to prod
+_source/
+_internal/
+*.md
+.claude/
+.git
+# Asset exclusions (keep video/images as source only)
 assets/*.mp4
 assets/hero.jpg
 assets/silhouette.jpg
 assets/kecak.jpg
 assets/*_1080p.jpg
-*.md
-site_*.html
-brand-card.html
-extract.json
-.git
-.claude
