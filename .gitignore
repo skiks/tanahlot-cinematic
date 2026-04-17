@@ -1,1 +1,4 @@
 .vercel
+
+# Git worktrees for this client (parallel branches)
+/.wt/
